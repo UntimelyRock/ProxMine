@@ -1,12 +1,12 @@
 package proxMine.common;
 
-import java.io.Serializable;
+import java.io.*;
 
 public class AudioPacket implements Serializable {
-    long playerID;
-    byte[] audioData;
+    public int playerID;
+    public byte[] audioData;
 
-    AudioPacket(long playerID, byte[] audioData){
+    public AudioPacket(int playerID, byte[] audioData){
         this.playerID = playerID;
         this.audioData = audioData;
     }
