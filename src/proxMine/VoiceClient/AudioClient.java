@@ -1,12 +1,20 @@
 package proxMine.VoiceClient;
 
+import arc.input.InputDevice;
+
 import java.io.IOException;
 import java.net.Socket;
 
 public class AudioClient {
+
+
     Socket clientSocket;
     PacketWriter packetWriter;
     PacketListener packetListener;
+
+
+
+
     public AudioClient(){
 
     }

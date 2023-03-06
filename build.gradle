@@ -26,9 +26,40 @@ allprojects{
     }
 }
 
+project.ext.lwjglVersion = "3.3.1"
+project.ext.lwjglNatives = "natives-windows"
+
+//chose OS for lwjgl natives
+import org.gradle.internal.os.OperatingSystem
+switch (OperatingSystem.current()) {
+    case OperatingSystem.LINUX:
+        def osArch = System.getProperty("os.arch")
+        project.ext.lwjglNatives = osArch.startsWith("arm") || osArch.startsWith("aarch64")
+                ? "natives-linux-${osArch.contains("64") || osArch.startsWith("armv8") ? "arm64" : "arm32"}"
+                : "natives-linux"
+        break
+    case OperatingSystem.MAC_OS:
+        project.ext.lwjglNatives = System.getProperty("os.arch").startsWith("aarch64") ? "natives-macos-arm64" : "natives-macos"
+        break
+    case OperatingSystem.WINDOWS:
+        def osArch = System.getProperty("os.arch")
+        project.ext.lwjglNatives = osArch.contains("64")
+                ? "natives-windows${osArch.startsWith("aarch64") ? "-arm64" : ""}"
+                : "natives-windows-x86"
+        break
+}
+
+println "Building with natives for " + lwjglNatives
+
 dependencies{
-//    implementation 'org.lwjgl:lwjgl:3.3.1'
-    implementation 'org.lwjgl:lwjgl-openal:3.3.1'
+    implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+    implementation "org.lwjgl:lwjgl"
+    implementation "org.lwjgl:lwjgl-openal"
+    runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+    runtimeOnly "org.lwjgl:lwjgl-openal::$lwjglNatives"
+
+
     compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
     compileOnly "com.github.Anuken.MindustryJitpack:core:$mindustryVersion"
     annotationProcessor "com.github.Anuken:jabel:$jabelVersion"
@@ -64,6 +95,7 @@ task jarAndroid{
 
 jar{
     archiveFileName = "${project.archivesBaseName}Desktop.jar"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 //    destinationDirectory.set(file("%appdata%/Mindustry/Mods"))
     from{
         configurations.runtimeClasspath.collect{ it.isDirectory() ? it : zipTree(it) }

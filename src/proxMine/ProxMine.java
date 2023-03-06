@@ -15,15 +15,18 @@ import mindustry.gen.Groups;
 import mindustry.gen.Player;
 import mindustry.mod.Mod;
 import mindustry.ui.dialogs.BaseDialog;
+//import org.lwjgl.openal.AL;
+import org.lwjgl.openal.AL;
+import org.lwjgl.openal.ALCCapabilities;
 import proxMine.VoiceClient.AudioClient;
 import proxMine.VoiceServer.AudioServer;
-
 import java.io.IOException;
 
 public class ProxMine extends Mod {
     protected AudioClient audioClient;
     protected AudioServer audioServer;
     protected ProxMineSettings proxMineSettings = null;
+
 
     public ProxMineSettings getProxMineSettings() {
         return proxMineSettings;
@@ -36,6 +39,7 @@ public class ProxMine extends Mod {
         Events.on(EventType.ClientLoadEvent.class, e -> {
             //show dialog upon startup
             Time.runTask(10f, () -> {
+
                 BaseDialog dialog = new BaseDialog("ProxMine is active");
                 dialog.cont.add("""
                         *****WARNING.*****
@@ -48,14 +52,6 @@ public class ProxMine extends Mod {
                 dialog.cont.button("I understand", dialog::hide).size(300f, 50f);
                 dialog.show();
 
-                try {
-
-                } catch (Exception ex) {
-                    Log.err(ex);
-                    BaseDialog errorDialog = new BaseDialog("error");
-                    errorDialog.cont.add("There was an error starting the AudioClient").row();
-                    errorDialog.cont.add(ex.getMessage()).row();
-                }
             });
 
 
