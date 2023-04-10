@@ -1,7 +1,7 @@
 package proxMine.ui;
 
 import mindustry.ui.dialogs.BaseDialog;
-import proxMine.ProxMineInfo;
+import proxMine.common.ProxMineInfo;
 
 public class CreditsAndInfoMenu implements Runnable{
 

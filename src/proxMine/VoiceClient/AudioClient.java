@@ -1,7 +1,5 @@
 package proxMine.VoiceClient;
 
-import arc.input.InputDevice;
-
 import java.io.IOException;
 import java.net.Socket;
 

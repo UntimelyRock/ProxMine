@@ -1,4 +1,4 @@
-package proxMine;
+package proxMine.common;
 
 import org.lwjgl.openal.*;
 
@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import static arc.Core.bundle;
 import static org.lwjgl.openal.ALC11.alcCloseDevice;
 import static org.lwjgl.openal.ALC11.alcDestroyContext;
 import static org.lwjgl.openal.ALC11.alcMakeContextCurrent;
@@ -60,8 +61,8 @@ public class ProxMineInfo {
                 .replace(",", "\n")
                 .replace("}", "")
                 .replace("{", "")
-                .replace("capture=[", "Capture devices\n ")
-                .replace("playback=[", "\nPlayback devices\n ")
+                .replace("capture=[", "\n" + bundle.get("info.proxMine.capture-devices") + "\n ")
+                .replace("playback=[", "\n" + bundle.get("info.proxMine.playback-devices") + "\n ")
                 .replace("]", "")
                 .replace("OpenAL Soft on", "")
                 ;
@@ -69,9 +70,9 @@ public class ProxMineInfo {
 
     public static String getALVersionInfo(){
         StringBuilder alInfo = new StringBuilder("OpenALInfo:");
-        alInfo.append("\n   Version:").append(AL11.alGetString(AL11.AL_VERSION));
-        alInfo.append("\n   Renderer:").append(AL11.alGetString(AL11.AL_RENDERER));
-        alInfo.append("\n   Vendor:").append(AL11.alGetString(AL11.AL_VENDOR));
+        alInfo.append("\n   "+ bundle.get("info.proxMine.version") + ":").append(AL11.alGetString(AL11.AL_VERSION));
+        alInfo.append("\n   "+ bundle.get("info.proxMine.renderer") + ":").append(AL11.alGetString(AL11.AL_RENDERER));
+        alInfo.append("\n   "+ bundle.get("info.proxMine.vendor") + ":").append(AL11.alGetString(AL11.AL_VENDOR));
         return alInfo.toString();
     }
 

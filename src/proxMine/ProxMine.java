@@ -1,47 +1,23 @@
 package proxMine;
 
-import arc.ApplicationListener;
-import arc.Core;
 import arc.Events;
-import arc.audio.AudioSource;
-import arc.audio.Soloud;
-import arc.func.Cons;
-import arc.func.Floatc;
-import arc.input.KeyCode;
-import arc.net.Client;
 import arc.util.CommandHandler;
 import arc.util.Log;
 import arc.util.Time;
 import mindustry.Vars;
-import mindustry.core.UI;
 import mindustry.game.EventType;
-import mindustry.gen.Groups;
-import mindustry.gen.Player;
 import mindustry.mod.Mod;
 import mindustry.ui.dialogs.BaseDialog;
-//import org.lwjgl.openal.AL;
-import mindustry.ui.dialogs.SettingsMenuDialog;
-import org.lwjgl.openal.AL;
-import org.lwjgl.openal.ALCCapabilities;
 import proxMine.VoiceClient.AudioClient;
 import proxMine.VoiceServer.AudioServer;
+import proxMine.common.ProxMineInfo;
 import proxMine.ui.CreditsAndInfoMenu;
 import proxMine.ui.SettingLabel;
-
-import java.io.IOException;
-
-import static arc.Core.bundle;
-import static arc.Core.settings;
 
 public class ProxMine extends Mod {
     protected AudioClient audioClient;
     protected AudioServer audioServer;
-    protected ProxMineSettings proxMineSettings = null;
 
-
-    public ProxMineSettings getProxMineSettings() {
-        return proxMineSettings;
-    }
 
     public ProxMine() {
         Log.info("Loading ProxMine");
@@ -91,7 +67,6 @@ public class ProxMine extends Mod {
 
             dialog.show();
         });
-        Core.app.post(new SettingMenu(this));
     }
 
     @Override
