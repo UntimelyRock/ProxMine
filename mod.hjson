@@ -5,13 +5,13 @@ displayName: "Prox Mine VC"
 name: "proxMine"
 
 #your name
-author: "fZirus"
+author: "UntimelyRock"
 
 #the fully qualified main class of the mod
 main: "proxMine.ProxMine"
 
 #the mod description as seen in the mod dialog
-description: "A Mindustry Java mod template."
+description: "A proximity chat for your mindustry"
 
 #the mod version
 version: 1.0

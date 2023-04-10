@@ -5,22 +5,32 @@ import arc.Core;
 import arc.Events;
 import arc.audio.AudioSource;
 import arc.audio.Soloud;
+import arc.func.Cons;
+import arc.func.Floatc;
 import arc.input.KeyCode;
+import arc.net.Client;
 import arc.util.CommandHandler;
 import arc.util.Log;
 import arc.util.Time;
 import mindustry.Vars;
+import mindustry.core.UI;
 import mindustry.game.EventType;
 import mindustry.gen.Groups;
 import mindustry.gen.Player;
 import mindustry.mod.Mod;
 import mindustry.ui.dialogs.BaseDialog;
 //import org.lwjgl.openal.AL;
+import mindustry.ui.dialogs.SettingsMenuDialog;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALCCapabilities;
 import proxMine.VoiceClient.AudioClient;
 import proxMine.VoiceServer.AudioServer;
+import proxMine.ui.SettingLabel;
+
 import java.io.IOException;
+
+import static arc.Core.bundle;
+import static arc.Core.settings;
 
 public class ProxMine extends Mod {
     protected AudioClient audioClient;
@@ -37,21 +47,26 @@ public class ProxMine extends Mod {
 
         //listen for game load event
         Events.on(EventType.ClientLoadEvent.class, e -> {
+            Log.info(ProxMineInfo.buildFullInfoString());
+
             //show dialog upon startup
             Time.runTask(10f, () -> {
 
-                BaseDialog dialog = new BaseDialog("ProxMine is active");
-                dialog.cont.add("""
-                        *****WARNING.*****
-                        ProxMine is a network based mod, the creator is not a network engineer or security specialist
-                        I cannot ensure this mod is secure. Only use this with people you trust.
-                        and am not responsible for any damage caused. You have been warned
-                        This will also eat up a TON of bandwidth.
-                        Please for the love of the scientific method do NOT use this on a metered connection.
-                                        """).row();
-                dialog.cont.button("I understand", dialog::hide).size(300f, 50f);
-                dialog.show();
 
+                Vars.ui.settings.addCategory(bundle.get("setting.pmine-title"), s ->{
+                    s.pref(new SettingLabel("pmine-audio-settings", 3));
+                    s.sliderPref("master-output-volume", 50, 0, 100, 1, str -> str+"%");
+                    s.pref(new SettingLabel("pmine-audio-settings", 3));
+
+
+
+                });
+
+                BaseDialog dialog = new BaseDialog("ProxMine is active");
+                dialog.cont.add(bundle.get("startup.pmine-start-warning")).row();
+                dialog.cont.button("I understand", dialog::hide).size(300f, 50f).row();
+                dialog.cont.button("view Open AL info and credits", new CreditsAndInfoMenu()).size(400,50);
+                dialog.show();
             });
 
 
@@ -135,6 +150,44 @@ public class ProxMine extends Mod {
                 errorDialog.cont.add(e.getStackTrace().toString()).row();
             }
             dialog.hide();
+        }
+    }
+
+    public static class CreditsAndInfoMenu implements Runnable{
+
+        @Override
+        public void run() {
+            BaseDialog creditsMenu = new BaseDialog("creditsMenu");
+            creditsMenu.cont.button("Credits", new Runnable() {
+                @Override
+                public void run() {
+                    //TODO: Make a credits screen
+                }
+            }).size(300f, 50);
+
+            creditsMenu.cont.button("Info", new Runnable() {
+                @Override
+                public void run() {
+                    BaseDialog infoDialog = new BaseDialog("infoDialog");
+                    infoDialog.cont.add(ProxMineInfo.buildFullInfoString()).row();
+                    infoDialog.cont.button("close", infoDialog::hide).size(100,50);
+                    infoDialog.show();
+                }
+            }).size(400f, 75);
+
+            creditsMenu.cont.button("Acknowledgements", new Runnable() {
+                @Override
+                public void run() {
+                    //TODO: https://www.lwjgl.org/license
+                }
+            }).size(300f, 50);
+
+            creditsMenu.cont.row();
+            creditsMenu.cont.button("", creditsMenu::hide).size(0.01f,0.01f);
+            creditsMenu.cont.button("Close", creditsMenu::hide).size(100f, 50f).center();
+
+            creditsMenu.show();
+
         }
     }
 

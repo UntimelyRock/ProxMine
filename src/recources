@@ -1,3 +1,23 @@
 https://github.com/Anuken/AuthorizePlugin/blob/master/src/authorize/AuthorizePlugin.java
 
 for server mode https://mindustrygame.github.io/docs/mindustry/Vars.html#headless
+
+{
+capture=[OpenAL Soft on Microphone (Microsoft LifeCam VX-5000)
+OpenAL Soft on Headset Microphone (3- Arctis 7 Chat)
+  OpenAL Soft on VoiceMeeter Aux Output (VB-Audio VoiceMeeter AUX VAIO)
+   OpenAL Soft on VoiceMeeter Output (VB-Audio VoiceMeeter VAIO)
+    OpenAL Soft on Headset Microphone (Oculus Virtual Audio Device)
+     OpenAL Soft on Microphone (Steam Streaming Microphone)]
+
+playback=[
+    OpenAL Soft on Headphones (3- Arctis 7 Game)
+    OpenAL Soft on Headphones (Oculus Virtual Audio Device)
+    OpenAL Soft on Digital Audio (S/PDIF) (High Definition Audio Device)
+    OpenAL Soft on Speakers (Steam Streaming Speakers)
+    OpenAL Soft on Headset Earphone (3- Arctis 7 Chat)
+    OpenAL Soft on VoiceMeeter Input (VB-Audio VoiceMeeter VAIO)
+    OpenAL Soft on Speakers (Steam Streaming Microphone)
+    OpenAL Soft on 5 - MSI G241 (AMD High Definition Audio Device)
+    OpenAL Soft on VoiceMeeter Aux Input (VB-Audio VoiceMeeter AUX VAIO)]
+}

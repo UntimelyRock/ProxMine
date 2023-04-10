@@ -13,7 +13,7 @@ public class AudioRecorder{
     byte[] data;
 
     public AudioRecorder(){
-        //alcDevice = ALC11.alcCaptureOpenDevice("default", 8000, ALC11.)
+        //alcDevice = ALC11.alcCaptureOpenDevice("default", 8000, );
     }
 
     public void open() {
