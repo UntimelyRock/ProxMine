@@ -25,6 +25,7 @@ import org.lwjgl.openal.AL;
 import org.lwjgl.openal.ALCCapabilities;
 import proxMine.VoiceClient.AudioClient;
 import proxMine.VoiceServer.AudioServer;
+import proxMine.ui.CreditsAndInfoMenu;
 import proxMine.ui.SettingLabel;
 
 import java.io.IOException;
@@ -45,31 +46,25 @@ public class ProxMine extends Mod {
     public ProxMine() {
         Log.info("Loading ProxMine");
 
-        //listen for game load event
         Events.on(EventType.ClientLoadEvent.class, e -> {
             Log.info(ProxMineInfo.buildFullInfoString());
 
-            //show dialog upon startup
-            Time.runTask(10f, () -> {
-
-
-                Vars.ui.settings.addCategory(bundle.get("setting.pmine-title"), s ->{
-                    s.pref(new SettingLabel("pmine-audio-settings", 3));
-                    s.sliderPref("master-output-volume", 50, 0, 100, 1, str -> str+"%");
-                    s.pref(new SettingLabel("pmine-audio-settings", 3));
-
-
-
-                });
-
-                BaseDialog dialog = new BaseDialog("ProxMine is active");
-                dialog.cont.add(bundle.get("startup.pmine-start-warning")).row();
-                dialog.cont.button("I understand", dialog::hide).size(300f, 50f).row();
-                dialog.cont.button("view Open AL info and credits", new CreditsAndInfoMenu()).size(400,50);
-                dialog.show();
+            Vars.ui.settings.addCategory("@setting.pmine-title", s ->{
+                s.pref(new SettingLabel("pmine-audio-settings", 3));
+                s.sliderPref("master-output-volume", 50, 0, 100, 1, str -> str+"%");
+                s.pref(new SettingLabel("pmine-audio-settings", 3));
+                s.row();
+                s.button("@setting.proxMine-info-button.name", new CreditsAndInfoMenu()).size(400,50);
+                s.row();
             });
 
-
+            Time.runTask(10f, () -> {
+                BaseDialog dialog = new BaseDialog("ProxMine is active");
+                dialog.cont.add("@startup.pmine-start-warning.warning").row();
+                dialog.cont.button("@startup.pmine-start-warning.accept", dialog::hide).size(300f, 50f).row();
+                //dialog.cont.button("view Open AL info and credits", new CreditsAndInfoMenu()).size(400,50);
+                dialog.show();
+            });
         });
 
         Events.on(EventType.ClientPreConnectEvent.class, clientPreConnectEvent -> {
@@ -112,15 +107,10 @@ public class ProxMine extends Mod {
         super.registerServerCommands(handler);
     }
 
-    @Override
-    public void loadContent(){
-        Log.info("Loading some example content.");
-    }
 
     public static class VoiceServerStarter implements Runnable{
         ProxMine proxMine;
         BaseDialog dialog;
-
         int port;
 
         public VoiceServerStarter(ProxMine proxMine, BaseDialog dialog, int port) {
@@ -139,8 +129,6 @@ public class ProxMine extends Mod {
                     proxMine.audioClient.connect("localhost", port);
                 }
 
-
-
             } catch (Exception e) {
                 Log.err(e);
                 BaseDialog errorDialog = new BaseDialog("error");
@@ -153,43 +141,6 @@ public class ProxMine extends Mod {
         }
     }
 
-    public static class CreditsAndInfoMenu implements Runnable{
-
-        @Override
-        public void run() {
-            BaseDialog creditsMenu = new BaseDialog("creditsMenu");
-            creditsMenu.cont.button("Credits", new Runnable() {
-                @Override
-                public void run() {
-                    //TODO: Make a credits screen
-                }
-            }).size(300f, 50);
-
-            creditsMenu.cont.button("Info", new Runnable() {
-                @Override
-                public void run() {
-                    BaseDialog infoDialog = new BaseDialog("infoDialog");
-                    infoDialog.cont.add(ProxMineInfo.buildFullInfoString()).row();
-                    infoDialog.cont.button("close", infoDialog::hide).size(100,50);
-                    infoDialog.show();
-                }
-            }).size(400f, 75);
-
-            creditsMenu.cont.button("Acknowledgements", new Runnable() {
-                @Override
-                public void run() {
-                    //TODO: https://www.lwjgl.org/license
-                }
-            }).size(300f, 50);
-
-            creditsMenu.cont.row();
-            creditsMenu.cont.button("", creditsMenu::hide).size(0.01f,0.01f);
-            creditsMenu.cont.button("Close", creditsMenu::hide).size(100f, 50f).center();
-
-            creditsMenu.show();
-
-        }
-    }
 
     public static class VoiceClientConnector implements Runnable{
         ProxMine proxMine;
@@ -218,8 +169,5 @@ public class ProxMine extends Mod {
             dialog.hide();
         }
     }
-
-
-
 }
 
