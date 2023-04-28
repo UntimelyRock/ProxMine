@@ -1,4 +1,4 @@
-# Prox mine is a proximity chat for Mindustry
+# Prox mine (WIP) is a proximity chat for Mindustry
 This project was created from the timplate https://github.com/Anuken/MindustryJavaModTemplate, most of the build.gradle is original to the template, however almost all other code is my own unless stated otherwise. For a complete list of changes you can review the Git change logs.
 
 ProxMine is still very much a work in progress, This mod is far from finished. And in its current state dosent even work. 
