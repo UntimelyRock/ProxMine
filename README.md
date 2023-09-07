@@ -1,10 +1,12 @@
+This project is currently on hiatus as I don't have access to port forwarding at my college, There are ways I could get around this; however, it's too much trouble for now.
+
 # Prox mine (WIP) is a proximity chat for Mindustry
-This project was created from the timplate https://github.com/Anuken/MindustryJavaModTemplate, most of the build.gradle is original to the template, however almost all other code is my own unless stated otherwise. For a complete list of changes you can review the Git change logs.
+This project was created from the template https://github.com/Anuken/MindustryJavaModTemplate, most of the build. Gradle is original to the template. However, almost all other code is my own unless stated otherwise. For a complete list of changes, you can review the Git change logs.
 
-ProxMine is still very much a work in progress, This mod is far from finished. And in its current state dosent even work. 
-This repository is open so that anyone with experience that cares can give me advice
+ProxMine is still very much a work in progress, This mod is far from finished. And in its current state doesn't even work. 
+This repository is open so that anyone with experience who cares can give me advice, and any advice would be greatly appreciated.
 
-//everything after this is from the template
+//Everything after this is from the template
 ## Building for Desktop Testing
 
 1. Install JDK **17**.
